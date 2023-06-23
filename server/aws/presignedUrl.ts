@@ -5,8 +5,8 @@ import { PutObjectCommand } from '@aws-sdk/client-s3';
 
 export const getPresignedUrl = async (fileName: string) => {
   const putCommand = new PutObjectCommand({
-    Bucket: '_files',
-    Key: fileName,
+    Bucket: 's3isfun',
+    Key: `media/${fileName}`,
   });
 
   return getSignedUrl(s3Client, putCommand, { expiresIn: 3600 })

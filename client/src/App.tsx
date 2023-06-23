@@ -5,12 +5,20 @@ const App: FC = () => {
   const [files, setFiles] = useState<FileList | null>(null);
   const [message, setMessage] = useState<string>('');
 
-  const onSubmit = async (): Promise<any> => {
-    const file = files?.[0] as File;
-
+  const uploadFile = async (file: File): Promise<void> => {
     const res = await axios.get(`http://localhost:8080/api/v1/upload?fileName=${file.name}`);
 
     await axios.put(res.data.presignedUrl, file);
+  };
+
+  const onSubmit = async (): Promise<void> => {
+    const n = files?.length || 0;
+
+    for (let i = 0; i < n; i += 1) {
+      const file = files?.[i] as File;
+
+      uploadFile(file);
+    }
   };
 
   return (
@@ -27,6 +35,7 @@ const App: FC = () => {
       <input
         name="files"
         type="file"
+        multiple
         onChange={
           (e: ChangeEvent<HTMLInputElement>) => setFiles(e.target.files)
         }
