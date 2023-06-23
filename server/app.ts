@@ -4,7 +4,7 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 
 import { router } from './routes';
-import { serverError, notFound } from './controllers/errors';
+import { serverError, notFound } from './controllers';
 
 export const app = express();
 
